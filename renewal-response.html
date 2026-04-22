@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Processing...</title>
+</head>
+
+<body style="font-family: Arial; text-align:center; margin-top:100px;">
+
+<h2>Processing your response...</h2>
+
+<script>
+    // Get values from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const recordID = urlParams.get('recordID');
+    const response = urlParams.get('response');
+
+    // Your Power Automate HTTP URL
+    const flowUrl = "https://defaultc76ea8e908f4435fbd05489330c6d2.cf.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/953e7ca72e1341658db068034d92cf09/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Dw_sMwVSFK_46aiuBpLVPaCefrXqi-YXlGHV05SPzQc";
+
+    // Send POST request to Power Automate
+    fetch(flowUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            recordID: recordID,
+            response: response
+        })
+    })
+    .then(() => {
+        document.body.innerHTML = "<h2>Thank you! Your response has been recorded.</h2>";
+    })
+    .catch(() => {
+        document.body.innerHTML = "<h2>Error submitting response. Please try again.</h2>";
+    });
+</script>
+
+</body>
+</html>
